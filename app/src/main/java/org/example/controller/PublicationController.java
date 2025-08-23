@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.example.model.Publication; 
 import org.example.service.PublicationService; 
+import org.example.dto.PublicationRequestDTO;
 
 import java.util.Map;
 
@@ -27,8 +29,9 @@ public class PublicationController {
 	}
 
 	@DeleteMapping("/{id}")
-	public void deletePublicationById(@PathVariable Long id) {
-		return publicationService.deletePublication(id); 
+	public ResponseEntity<Void> deletePublicationById(@PathVariable Long id) {
+		publicationService.deletePublication(id); 
+		return ResponseEntity.noContent().build();
 	}
 
 	@PatchMapping("/{id}")
@@ -38,6 +41,6 @@ public class PublicationController {
 
 	@PutMapping
 	public Publication createPublication(@RequestBody PublicationRequestDTO dto) {
-		return publicationService.createPublicaton(dto);
+		return publicationService.createPublication(dto);
 	}
 }

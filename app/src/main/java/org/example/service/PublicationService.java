@@ -3,9 +3,11 @@ package org.example.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.example.dto.PublicationRequestDTO; 
 import org.example.model.Publication; 
+import org.example.mapper.PublicationMapper; 
 import org.example.repository.PublicationRepository; 
-import org.example.exception.PublicationNotFounded;
+import org.example.exception.PublicationNotFoundedException;
 
 @Service
 public class PublicationService {
@@ -15,10 +17,10 @@ public class PublicationService {
 	private PublicationMapper publicationMapper;
 
 	public Publication getPublicationAndIncrementViews(Long id) {
-		var publication = publicationRepository.findById(id).getOrElse(null);
+		var publication = publicationRepository.findById(id).orElse(null);
 
 		if(publication == null) {
-			throw new PublicationNotFounded();
+			throw new PublicationNotFoundedException();
 		}
 
 		publication.setViews(publication.getViews() + 1);
@@ -27,7 +29,7 @@ public class PublicationService {
 		return publication;
 	}
 
-	public Publication deletePublication(Long id) {
+	public void deletePublication(Long id) {
 		publicationRepository.deleteById(id);
 	}
 
@@ -38,13 +40,13 @@ public class PublicationService {
 	}
 
 	public Publication updatePublication(Long id, PublicationRequestDTO dto) {
-		var publication = publicationRepository.findById(id).getOrElse(null);
+		var publication = publicationRepository.findById(id).orElse(null);
 
 		if(publication == null) {
-			throw new PublicationNotFounded();
+			throw new PublicationNotFoundedException();
 		}
 
-		var publication = publicationMapper.toEntity(dto);	
+		publication = publicationMapper.toEntity(dto);	
 		publication.setId(id);
 		publicationRepository.save(publication);
 		return publication;
