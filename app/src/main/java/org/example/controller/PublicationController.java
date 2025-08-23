@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.example.model.Publication; 
-import org.example.repository.PublicationRepository; 
+import org.example.service.PublicationService; 
 
 import java.util.Map;
 
@@ -19,39 +19,25 @@ import java.util.Map;
 @RequestMapping("api/v1/publications")
 public class PublicationController {
 	@Autowired
-	private PublicationRepository publicationRepository;
+	private PublicationService publicationService;
 
 	@GetMapping("/{id}")
 	public Publication getPublicationById(@PathVariable Long id) {
-		return publicationRepository.findById(id).get();
+		return publicationService.getPublicationAndIncrementViews(id);
 	}
 
 	@DeleteMapping("/{id}")
 	public void deletePublicationById(@PathVariable Long id) {
-		publicationRepository.deleteById(id);
-		return; 
+		return publicationService.deletePublication(id); 
 	}
 
 	@PatchMapping("/{id}")
-	public Publication updatePublicationDescription(@PathVariable Long id, @RequestBody Map<String, String> updates) {
-		var publication = publicationRepository.findById(id);
-
-		if (publication.isEmpty()) {
-			return null;
-		}
-
-		var existingPublication = publication.get();
-		existingPublication.setDescription(updates.get("description")); 
-		publicationRepository.save(existingPublication);
-		return existingPublication;
+	public Publication updatePublicationDescription(@PathVariable Long id, @RequestBody PublicationRequestDTO dto) {
+		return publicationService.updatePublication(id, dto);
 	}
 
 	@PutMapping
-	public Publication createPublication(@RequestBody Map<String, String> newPublication) {
-		var publication = new Publication();
-		publication.setDescription(newPublication.get("description")); 
-		publicationRepository.save(publication);
-		return publication;
+	public Publication createPublication(@RequestBody PublicationRequestDTO dto) {
+		return publicationService.createPublicaton(dto);
 	}
-
 }
