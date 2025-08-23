@@ -15,8 +15,6 @@ import org.example.model.Publication;
 import org.example.service.PublicationService; 
 import org.example.dto.PublicationRequestDTO;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("api/v1/publications")
 public class PublicationController {

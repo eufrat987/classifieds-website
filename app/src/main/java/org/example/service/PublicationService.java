@@ -46,8 +46,7 @@ public class PublicationService {
 			throw new PublicationNotFoundedException();
 		}
 
-		publication = publicationMapper.toEntity(dto);	
-		publication.setId(id);
+		publication.setDescription(dto.getDescription());
 		publicationRepository.save(publication);
 		return publication;
 	}
