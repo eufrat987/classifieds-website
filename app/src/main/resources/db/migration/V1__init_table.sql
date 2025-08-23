@@ -1,0 +1,6 @@
+CREATE TABLE publication (
+	id LONG AUTO_INCREMENT PRIMARY KEY,
+	description VARCHAR(1000) NOT NULL,
+	creationDate TIMESTAMP NOT NULL,
+	views INT NOT NULL
+)

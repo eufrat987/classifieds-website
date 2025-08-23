@@ -19,7 +19,7 @@ public class Publication {
 	private String description;
 
 	@CreationTimestamp
-	@Column(updatable = false)
+	@Column(updatable = false, nullable = false)
 	private LocalDateTime creationDate;
 
 	@Column(nullable = false)
