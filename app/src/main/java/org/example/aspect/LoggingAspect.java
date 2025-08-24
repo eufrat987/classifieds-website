@@ -27,6 +27,6 @@ public class LoggingAspect {
 
 	@AfterThrowing("execution(* org.example.service..*(..))")
 	public void logEntry(JoinPoint joinPoint, Throwable ex) {
-		logger.debug("Exception in method: {} with message: {}", joinPoint.getSignature(), ex.getMessage());
+		logger.error("Exception in method: {} with message: {}", joinPoint.getSignature(), ex.getMessage());
 	}
 }
