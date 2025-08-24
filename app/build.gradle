@@ -44,6 +44,33 @@ testing {
     }
 }
 
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+            runtimeClasspath += output + compileClasspath
+            srcDir file('src/integration/java')
+        }
+        resources.srcDir file('src/integration/resources')
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+    useJUnitPlatform()    
+}
+
+check.dependsOn integrationTest
+
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
