@@ -44,7 +44,7 @@ public class PublicationService {
 	@Recover
 	public Publication recover(ObjectOptimisticLockingFailureException ex) {
 		System.out.println("errr");
-		return null;
+		throw ex;
 	}
 
 	public void deletePublication(Long id) {
