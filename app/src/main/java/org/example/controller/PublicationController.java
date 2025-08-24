@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,9 @@ public class PublicationController {
 	private PublicationService publicationService;
 
 	@GetMapping("/{id}")
-	public Publication getPublicationById(@PathVariable Long id) {
-		return publicationService.getPublicationAndIncrementViews(id);
+	public ResponseEntity<Publication> getPublicationById(@PathVariable @Valid Long id) {
+		var publication = publicationService.getPublicationAndIncrementViews(id);
+		return ResponseEntity.ok(publication);
 	}
 
 	@DeleteMapping("/{id}")
@@ -33,12 +35,14 @@ public class PublicationController {
 	}
 
 	@PatchMapping("/{id}")
-	public Publication updatePublicationDescription(@PathVariable Long id, @RequestBody PublicationRequestDTO dto) {
-		return publicationService.updatePublication(id, dto);
+	public ResponseEntity<Publication> updatePublicationDescription(@PathVariable Long id, @RequestBody @Valid PublicationRequestDTO dto) {
+		var publication = publicationService.updatePublication(id, dto);
+		return ResponseEntity.ok(publication);
 	}
 
 	@PutMapping
-	public Publication createPublication(@RequestBody PublicationRequestDTO dto) {
-		return publicationService.createPublication(dto);
+	public ResponseEntity<Publication> createPublication(@RequestBody @Valid PublicationRequestDTO dto) {
+		var publication = publicationService.createPublication(dto);
+		return ResponseEntity.ok(publication);
 	}
 }

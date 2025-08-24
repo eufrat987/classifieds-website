@@ -21,7 +21,7 @@ public class PublicationControllerTest {
 	private PublicationService publicationService; 
 	
 	@Test
-	public void testGetPublicationById() throws Exception {
+	public void whenGetRequest_thenResponseOk() throws Exception {
 		Mockito.when(publicationService.getPublicationAndIncrementViews(1L)).thenReturn(new Publication());
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/publications/1"))
@@ -29,13 +29,13 @@ public class PublicationControllerTest {
 	}
 
 	@Test
-	public void testDeletePublicationById() throws Exception {
+	public void whenDeleteRequest_thenResponseNoContent() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/publications/1"))
 			.andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
 
 	@Test
-	public void testCreatePublication() throws Exception {
+	public void whenPutRequestWithBody_thenResponseOk() throws Exception {
 		Mockito.when(publicationService.createPublication(Mockito.any())).thenReturn(new Publication());
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/publications")
@@ -45,7 +45,7 @@ public class PublicationControllerTest {
 	}
 
 	@Test
-	public void testUpdatePublicationById() throws Exception {
+	public void whenUpdateRequestWithBody_thenResponseOk() throws Exception {
 		Mockito.when(publicationService.updatePublication(Mockito.eq(1L), Mockito.any())).thenReturn(new Publication());
 
 		mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/publications/1")

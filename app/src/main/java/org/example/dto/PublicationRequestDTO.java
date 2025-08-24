@@ -5,8 +5,10 @@ import jakarta.validation.constraints.Size;
 
 
 import lombok.Getter;
+import lombok.AllArgsConstructor;
 
 @Getter
+@AllArgsConstructor
 public class PublicationRequestDTO {
 
 	@NotBlank

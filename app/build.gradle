@@ -26,6 +26,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:11.11.1")
     implementation("org.projectlombok:lombok:1.18.38")
     implementation("jakarta.validation:jakarta.validation-api:3.1.1")
+    implementation("org.hibernate.validator:hibernate-validator:9.0.1.Final")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test:3.5.4")
 
