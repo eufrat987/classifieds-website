@@ -28,6 +28,5 @@ public class PublicationServiceTest {
 		publication.setViews(2);
 		var result = service.getPublicationAndIncrementViews(1L);
 		Assertions.assertEquals(result.getViews(), 3);
-
 	}
 }
