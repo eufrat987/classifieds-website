@@ -36,21 +36,21 @@ public class PublicationService {
 		}
 
 		publication.setViews(publication.getViews() + 1);
-		publicationRepository.save(publication);
-
 		return publication;
 	}
 
+	@Transactional
 	public void deletePublication(Long id) {
 		publicationRepository.deleteById(id);
 	}
 
+	@Transactional
 	public Publication createPublication(PublicationRequestDTO dto) {
 		var publication = publicationMapper.toEntity(dto);	
-		publicationRepository.save(publication);
 		return publication;
 	}
 
+	@Transactional
 	public Publication updatePublication(Long id, PublicationRequestDTO dto) {
 		var publication = publicationRepository.findById(id).orElse(null);
 
@@ -59,7 +59,6 @@ public class PublicationService {
 		}
 
 		publication.setDescription(dto.getDescription());
-		publicationRepository.save(publication);
 		return publication;
 	}
 }
