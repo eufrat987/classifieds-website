@@ -6,15 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-public class PublicationRepositoryTest {
+public class PublicationRepositorySmokeTest {
 	@Autowired
 	private PublicationRepository publicationRepository;
 
 	@Test
-	public void testFindAllPublications() {
+	public void whenCountAllPublication_thenReturnTwo() {
 		var numberOfPublications = publicationRepository.count();
-
 		Assertions.assertEquals(numberOfPublications, 2);
-		
 	}
 }
