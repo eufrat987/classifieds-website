@@ -33,7 +33,7 @@ public class PublicationRequestDTOTest {
 	}
 	@Test
 	public void whenDescriptionIsTooLong_thenViolation() {
-		var chars = new char[2000];
+		var chars = new char[1001];
 		Arrays.fill(chars, 'a');
 		var description = new String(chars);
 		var dto = new PublicationRequestDTO(description);

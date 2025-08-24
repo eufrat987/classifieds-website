@@ -29,12 +29,7 @@ public class PublicationService {
 	)
 	@Transactional
 	public Publication getPublicationAndIncrementViews(Long id) {
-		var publication = publicationRepository.findById(id).orElse(null);
-
-		if(publication == null) {
-			throw new PublicationNotFoundedException();
-		}
-
+		var publication = publicationRepository.findById(id).orElseThrow(() -> new PublicationNotFoundedException());
 		publication.setViews(publication.getViews() + 1);
 		return publication;
 	}
@@ -47,17 +42,13 @@ public class PublicationService {
 	@Transactional
 	public Publication createPublication(PublicationRequestDTO dto) {
 		var publication = publicationMapper.toEntity(dto);	
+		publication = publicationRepository.save(publication);
 		return publication;
 	}
 
 	@Transactional
 	public Publication updatePublication(Long id, PublicationRequestDTO dto) {
-		var publication = publicationRepository.findById(id).orElse(null);
-
-		if(publication == null) {
-			throw new PublicationNotFoundedException();
-		}
-
+		var publication = publicationRepository.findById(id).orElseThrow(() -> new PublicationNotFoundedException());
 		publication.setDescription(dto.getDescription());
 		return publication;
 	}

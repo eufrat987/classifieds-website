@@ -45,6 +45,16 @@ public class PublicationControllerTest {
 	}
 
 	@Test
+	public void whenPutRequestWithInvalidBody_thenResponseBadRequest() throws Exception {
+		Mockito.when(publicationService.createPublication(Mockito.any())).thenReturn(new Publication());
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/publications")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content("{\"description\": \"\"}"))
+			.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
 	public void whenUpdateRequestWithBody_thenResponseOk() throws Exception {
 		Mockito.when(publicationService.updatePublication(Mockito.eq(1L), Mockito.any())).thenReturn(new Publication());
 

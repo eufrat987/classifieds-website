@@ -29,7 +29,7 @@ public class Publication {
 	private LocalDateTime creationDate;
 
 	@Column(nullable = false)
-	private int views = 0;
+	private int views;
 
 	@Version
 	private int version;
