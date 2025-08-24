@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
@@ -28,5 +29,8 @@ public class Publication {
 	private LocalDateTime creationDate;
 
 	@Column(nullable = false)
-	private Integer views = 0;
+	private int views = 0;
+
+	@Version
+	private int version;
 }
