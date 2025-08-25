@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import reactor.core.publisher.Mono;
+
 import org.example.model.Publication; 
 import org.example.service.PublicationService; 
 import org.example.dto.PublicationRequestDTO;
@@ -23,26 +25,25 @@ public class PublicationController {
 	private PublicationService publicationService;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Publication> getPublicationById(@PathVariable @Valid Long id) {
-		var publication = publicationService.getPublicationAndIncrementViews(id);
-		return ResponseEntity.ok(publication);
+	public Mono<Publication> getPublicationById(@PathVariable @Valid Long id) {
+		return publicationService.getPublicationAndIncrementViews(id);
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletePublicationById(@PathVariable Long id) {
-		publicationService.deletePublication(id); 
-		return ResponseEntity.noContent().build();
-	}
+	//@DeleteMapping("/{id}")
+	//public ResponseEntity<Void> deletePublicationById(@PathVariable Long id) {
+	//	publicationService.deletePublication(id); 
+	//	return ResponseEntity.noContent().build();
+	//}
 
-	@PatchMapping("/{id}")
-	public ResponseEntity<Publication> updatePublicationDescription(@PathVariable Long id, @RequestBody @Valid PublicationRequestDTO dto) {
-		var publication = publicationService.updatePublication(id, dto);
-		return ResponseEntity.ok(publication);
-	}
+	//@PatchMapping("/{id}")
+	//public ResponseEntity<Publication> updatePublicationDescription(@PathVariable Long id, @RequestBody @Valid PublicationRequestDTO dto) {
+	//	var publication = publicationService.updatePublication(id, dto);
+	//	return ResponseEntity.ok(publication);
+	//}
 
-	@PutMapping
-	public ResponseEntity<Publication> createPublication(@RequestBody @Valid PublicationRequestDTO dto) {
-		var publication = publicationService.createPublication(dto);
-		return ResponseEntity.ok(publication);
-	}
+	//@PutMapping
+	//public ResponseEntity<Publication> createPublication(@RequestBody @Valid PublicationRequestDTO dto) {
+	//	var publication = publicationService.createPublication(dto);
+	//	return ResponseEntity.ok(publication);
+	//}
 }

@@ -4,10 +4,17 @@
 package org.example;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
+import org.example.repository.PublicationRepository;
+import org.example.model.Publication;
+
+@EnableR2dbcRepositories(basePackages = "org.example.repository")
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableRetry
@@ -15,5 +22,13 @@ public class App {
 
     public static void main(String[] args) {
 	    SpringApplication.run(App.class, args);
+    }
+
+    @Bean
+    public ApplicationRunner init(PublicationRepository repo) {
+	    return args -> {
+		    var pub = new Publication();
+		    repo.save(pub).subscribe();
+	    };
     }
 }
