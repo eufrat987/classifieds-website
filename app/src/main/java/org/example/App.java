@@ -9,12 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 import org.example.repository.PublicationRepository;
 import org.example.model.Publication;
 
-@EnableR2dbcRepositories(basePackages = "org.example.repository")
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableRetry
