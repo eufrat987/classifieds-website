@@ -3,6 +3,9 @@ package org.example.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +25,11 @@ public class PublicationController {
 	@Autowired
 	private PublicationService publicationService;
 
+	@Retryable(
+			value = ObjectOptimisticLockingFailureException.class,
+			maxAttempts = 5,
+			backoff = @Backoff(delay = 100, multiplier = 2)
+	)
 	@GetMapping("/{id}")
 	public ResponseEntity<Publication> getPublicationById(@PathVariable @Valid Long id) {
 		var publication = publicationService.getPublicationAndIncrementViews(id);

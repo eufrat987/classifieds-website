@@ -13,6 +13,6 @@ public class PublicationRepositoryIntegrationTest {
 	@Test
 	public void whenCountAllPublications_thenReturnTwo() {
 		var numberOfPublications = publicationRepository.count();
-		Assertions.assertEquals(numberOfPublications, 2);
+		Assertions.assertEquals(2, numberOfPublications);
 	}
 }

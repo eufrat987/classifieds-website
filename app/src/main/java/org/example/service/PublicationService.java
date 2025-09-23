@@ -3,11 +3,6 @@ package org.example.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.retry.annotation.Retryable;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Recover;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import jakarta.persistence.OptimisticLockException;
 
 import org.example.dto.PublicationRequestDTO; 
 import org.example.model.Publication; 
@@ -22,11 +17,6 @@ public class PublicationService {
 	@Autowired
 	private PublicationMapper publicationMapper;
 
-	@Retryable(
-		value = ObjectOptimisticLockingFailureException.class,
-		maxAttempts = 5,
-		backoff = @Backoff(delay = 100, multiplier = 2)
-	)
 	@Transactional
 	public Publication getPublicationAndIncrementViews(Long id) {
 		var publication = publicationRepository.findById(id).orElseThrow(() -> new PublicationNotFoundedException());

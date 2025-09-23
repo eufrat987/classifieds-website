@@ -27,6 +27,6 @@ public class PublicationServiceTest {
 		Mockito.when(repository.findById(Mockito.any())).thenReturn(Optional.of(publication));
 		publication.setViews(2);
 		var result = service.getPublicationAndIncrementViews(1L);
-		Assertions.assertEquals(result.getViews(), 3);
+		Assertions.assertEquals(3, result.getViews());
 	}
 }

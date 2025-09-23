@@ -23,6 +23,6 @@ public class PublicationControllerIntegrationTest {
 	public void whenGetRequest_thenResponseWithPublication() throws Exception {
 		var response = restTemplate.getForEntity("/api/v1/publications/1", Publication.class);
 
-		Assertions.assertEquals(response.getBody().getDescription(), "text1");
+		Assertions.assertEquals("text1", response.getBody().getDescription());
 	}
 }
